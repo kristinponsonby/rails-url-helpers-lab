@@ -38,37 +38,15 @@ describe 'Show page' do
     expect(page).to have_css("h1", text: "Targaryen")
   end
 
-  it 'renders the active status if the user is inactive' do
-    visit student_path(@student)
-    expect(page).to have_content("This student is currently inactive.")
-  end
-
-  it 'renders the active status if the user is active' do
-    @student.active = true
-    @student.save
-    visit student_path(@student)
-    expect(page).to have_content("This student is currently active.")
-  end
-end
+  
 
 describe 'Activate page' do
   before do
     @student = Student.create!(first_name: "Daenerys", last_name: "Targaryen")
   end
+end
 
-  it "Should mark an inactive student as active" do
-    visit activate_student_path(@student)
-    @student.reload
-    expect(@student.active).to eq(true)
-  end
 
-  it "Should mark an active student as inactive" do
-    @student.active = true
-    @student.save
-    visit activate_student_path(@student)
-    @student.reload
-    expect(@student.active).to eq(false)
-  end
 
   it "Should redirect to the student show page" do
     visit activate_student_path(@student)
